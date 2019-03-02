@@ -1,11 +1,10 @@
 #pragma once
-#include <vector>
-#include <iostream>
-#include <cctype>
-#include <string>
-#include <numeric>
 #include <algorithm>
+#include <cctype>
+#include <iostream>
 #include <sstream>
+#include <vector>
+
 class Splitter {
 public:
 	Splitter() = default;
@@ -13,17 +12,22 @@ public:
 		: m_prompt(std::move(prompt))
 		, m_delimiter(' ')
 	{}
+	Splitter(const Splitter&) = delete;
+	Splitter(Splitter&&) = delete;
+	Splitter& operator=(const Splitter&) = delete;
+	Splitter& operator=(Splitter&&) = delete;
 
 	void prompt(std::string prompt);
-	friend std::ostream& operator<<(std::ostream& os, const Splitter& splitter);
+
 	std::vector<std::string> split (char delimiter);
 	Splitter& to_lower();
+	friend std::ostream& operator<<(std::ostream& os, const Splitter& splitter);
+
 
 private:
 	std::string m_prompt;
 	char m_delimiter;
 	std::vector<std::string> m_result;
-
 };
 
 std::vector<std::string> Splitter::split(char delimiter) {
